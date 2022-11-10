@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import RowCard from "../../components/RowCard";
+import { debounceHandler } from "../../utils";
+import SearchBar from "@mkyy/mui-search-bar";
 import "./index.scss";
 
 const RestaurantsList: React.FC = () => {
@@ -34,10 +36,18 @@ const RestaurantsList: React.FC = () => {
   useEffect(() => {
     getPlaces("");
   }, []);
+
   console.log(places);
   return (
     <div className="restaurantsList">
-      <input />
+      <SearchBar
+        style={{ border: "1px solid black", width: "100%" }}
+        onChange={(value: string): void => {
+          debounceHandler(() => getPlaces(value), 300);
+        }}
+        onSearch={() => {}}
+        onCancelResearch={() => getPlaces("")}
+      />
       {places?.length > 0 &&
         places.map((place, index) => {
           return <RowCard key={index} data={place} />;
