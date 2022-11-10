@@ -1,0 +1,8 @@
+.restaurantsList {
+  max-height: 100%;
+  padding: 5px;
+  overflow: auto;
+  & > * {
+    margin-top: 5px;
+  }
+}

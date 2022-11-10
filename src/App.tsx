@@ -1,11 +1,11 @@
 import React from "react";
-import MapView from "./components/Map";
 import "./App.css";
+import RestaurantsList from "./pages/RestaurantsList";
 
 const App: React.FC = () => {
   return (
     <div>
-      <MapView />
+      <RestaurantsList />
     </div>
   );
 };
