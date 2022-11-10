@@ -10,13 +10,13 @@ const RowCard = ({ data }: propType): JSX.Element => {
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {data?.venue?.name}
+            {data?.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Address: {data?.venue?.location?.address}
+            Address: {data?.location?.address}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Distance: {(data?.venue?.location?.distance / 1000).toFixed(2)}km
+            Distance: {(data?.location?.distance / 1000).toFixed(2)}km
           </Typography>
         </CardContent>
       </CardActionArea>

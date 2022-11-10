@@ -7,7 +7,7 @@ const RestaurantsList: React.FC = () => {
   const [places, setPlace] = useState([]);
 
   const getPlaces = (query: string): void => {
-    const endPoint: string = "https://api.foursquare.com/v2/venues/explore?";
+    const endPoint: string = "https://api.foursquare.com/v2/venues/search?";
 
     const parameters = {
       client_id: "POKXMHQJY0EHTRGZEPMVWPJDWMUTSVRRINJILUSE5WZTSTUI",
@@ -24,7 +24,7 @@ const RestaurantsList: React.FC = () => {
     axios
       .get(`${endPoint}${new URLSearchParams(parameters).toString()}`)
       .then((response) => {
-        setPlace(response.data.response.groups[0].items);
+        setPlace(response?.data?.response?.venues);
       })
       .catch(() => {
         console.log("Error!");
@@ -32,11 +32,12 @@ const RestaurantsList: React.FC = () => {
   };
 
   useEffect(() => {
-    getPlaces("indian");
+    getPlaces("");
   }, []);
   console.log(places);
   return (
     <div className="restaurantsList">
+      <input />
       {places?.length > 0 &&
         places.map((place, index) => {
           return <RowCard key={index} data={place} />;
