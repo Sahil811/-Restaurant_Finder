@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import RestaurantsList from "./pages/RestaurantsList";
+import Restaurants from "./pages/Restaurants";
 
 const App: React.FC = () => {
   return (
     <div>
-      <RestaurantsList />
+      <Restaurants />
     </div>
   );
 };
