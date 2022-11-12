@@ -22,6 +22,7 @@ const SearchField = ({ searchHandler }: { searchHandler: Function }): null => {
   useEffect((): void => {
     map.addControl(searchControl);
     map.on("geosearch/showlocation", (res): void => {
+      // @ts-expect-error
       searchHandler(`${Number(res?.location?.y)},${Number(res?.location?.x)}`);
     });
     // @ts-expect-error

@@ -4,6 +4,7 @@ import RowCard from "../../components/RowCard";
 import { debounceHandler } from "../../utils";
 import SearchBar from "@mkyy/mui-search-bar";
 import MapView from "../../components/Map";
+import { searchParamsType } from "../types";
 import "./index.scss";
 
 const RestaurantsList: React.FC = () => {
@@ -17,9 +18,9 @@ const RestaurantsList: React.FC = () => {
     (query: string): void => {
       const endPoint: string = "https://api.foursquare.com/v2/venues/search?";
 
-      const parameters = {
-        client_id: "POKXMHQJY0EHTRGZEPMVWPJDWMUTSVRRINJILUSE5WZTSTUI",
-        client_secret: "N4QKO4TTH4QKBFQ3SBYHUTQ5RUWMGAZ0B5JDYUE0H3V2W151",
+      const parameters: searchParamsType = {
+        client_id: process.env.REACT_APP_CLIENT_ID,
+        client_secret: process.env.REACT_APP_CLIENT_SECREATE,
         categoryId: "4d4b7105d754a06374d81259",
         ll: searchLocation,
         query,
@@ -28,6 +29,7 @@ const RestaurantsList: React.FC = () => {
         limit: "10",
       };
       axios
+        // @ts-expect-error
         .get(`${endPoint}${new URLSearchParams(parameters).toString()}`)
         .then((response) => {
           setPlace(response?.data?.response?.venues);

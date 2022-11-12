@@ -11,6 +11,7 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { venueDetailspropType } from "./types";
 import TextRating from "../../components/Rating";
 import ReviewCard from "../../components/ReviewCard";
+import { searchParamsType } from "../types";
 import "./index.scss";
 
 const RestaurantDetails: React.FC = () => {
@@ -27,12 +28,13 @@ const RestaurantDetails: React.FC = () => {
     (query: string): void => {
       const endPoint: string = `https://api.foursquare.com/v2/venues/${venueId}?`;
 
-      const parameters = {
-        client_id: "POKXMHQJY0EHTRGZEPMVWPJDWMUTSVRRINJILUSE5WZTSTUI",
-        client_secret: "N4QKO4TTH4QKBFQ3SBYHUTQ5RUWMGAZ0B5JDYUE0H3V2W151",
+      const parameters: searchParamsType = {
+        client_id: process.env.REACT_APP_CLIENT_ID,
+        client_secret: process.env.REACT_APP_CLIENT_SECREATE,
         v: "20180725",
       };
       axios
+        // @ts-expect-error
         .get(`${endPoint}${new URLSearchParams(parameters).toString()}`)
         .then((response) => {
           setVenueDetails(response?.data?.response?.venue);
