@@ -1,4 +1,5 @@
 export interface propType {
+  searchHandler: Function;
   data: Array<{
     id: string;
     map: Function;

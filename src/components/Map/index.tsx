@@ -1,11 +1,37 @@
-import { MapContainer, TileLayer, Popup, Marker } from "react-leaflet";
+import { useEffect } from "react";
+import { useMap, MapContainer, TileLayer, Popup, Marker } from "react-leaflet";
+import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
+import "leaflet-geosearch/dist/geosearch.css";
 import { propType } from "./types";
 import "./index.scss";
 
-const MapView = ({ data }: propType): JSX.Element => {
+const SearchField = ({ searchHandler }: { searchHandler: Function }): null => {
+  const provider = new OpenStreetMapProvider();
+
+  // @ts-expect-error
+  const searchControl = new GeoSearchControl({
+    provider,
+    showMarker: false, // optional: true|false  - default true
+    showPopup: false, // optional: true|false  - default false
+  });
+
+  const map = useMap();
+  useEffect((): void => {
+    map.addControl(searchControl);
+    map.on("geosearch/showlocation", (res): void => {
+      searchHandler(`${Number(res?.location?.y)},${Number(res?.location?.x)}`);
+    });
+    // @ts-expect-error
+    return () => map.removeControl(searchControl);
+  }, []);
+
+  return null;
+};
+
+const MapView = ({ data, searchHandler }: propType): JSX.Element => {
   return (
     <div className="mapView">
       <MapContainer
@@ -14,6 +40,7 @@ const MapView = ({ data }: propType): JSX.Element => {
         zoom={15}
         scrollWheelZoom={false}
       >
+        <SearchField searchHandler={searchHandler} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
