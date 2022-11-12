@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ErrorBoundary from "./components/Hoc/ErrorBoundry";
 const Restaurants = lazy(async () => await import("./pages/Restaurants"));
 const RestaurantDetails = lazy(
   async () => await import("./pages/RestaurantDetails"),
@@ -21,19 +22,21 @@ const routes = [
 const App: React.FC = () => {
   return (
     <div>
-      <Router>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            {routes.map((route) => (
-              <Route
-                key={`${route.name}`}
-                path={`${route.path}`}
-                element={<route.element />}
-              />
-            ))}
-          </Routes>
-        </Suspense>
-      </Router>
+      <ErrorBoundary>
+        <Router>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              {routes.map((route) => (
+                <Route
+                  key={`${route.name}`}
+                  path={`${route.path}`}
+                  element={<route.element />}
+                />
+              ))}
+            </Routes>
+          </Suspense>
+        </Router>
+      </ErrorBoundary>
     </div>
   );
 };
