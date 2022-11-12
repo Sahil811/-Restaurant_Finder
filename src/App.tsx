@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ErrorBoundary from "./components/Hoc/ErrorBoundry";
+import ErrorPage from "./components/ErrorPage";
 const Restaurants = lazy(async () => await import("./pages/Restaurants"));
 const RestaurantDetails = lazy(
   async () => await import("./pages/RestaurantDetails"),
@@ -33,6 +34,7 @@ const App: React.FC = () => {
                   element={<route.element />}
                 />
               ))}
+              <Route path="*" element={<ErrorPage />} />
             </Routes>
           </Suspense>
         </Router>
