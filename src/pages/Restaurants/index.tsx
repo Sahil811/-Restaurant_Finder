@@ -9,8 +9,10 @@ import "./index.scss";
 
 const RestaurantsList: React.FC = () => {
   const [searchLocation, seSearchLocation] = useState<string>(
-    "35.66470143744811,139.73781436564153",
+    "35.66470143744811,139.73781436564153", // Cogent Labes
   );
+
+  const [errorMessage, setErrorMessage] = useState<null | string>(null);
 
   const [places, setPlace] = useState([]);
 
@@ -35,7 +37,7 @@ const RestaurantsList: React.FC = () => {
           setPlace(response?.data?.response?.venues);
         })
         .catch(() => {
-          console.log("Error!");
+          setErrorMessage("Oops something went wrong. Please try again.");
         });
     },
     [searchLocation],
@@ -45,30 +47,35 @@ const RestaurantsList: React.FC = () => {
     getVenuesHandler("");
   }, [searchLocation, getVenuesHandler]);
 
-  console.log(places);
   return (
     <div className="restaurants">
-      <div>
-        <SearchBar
-          className="restaurants__search"
-          // @ts-expect-error
-          onChange={(value: string): void => {
-            debounceHandler(() => getVenuesHandler(value), 300);
-          }}
-          onSearch={() => {}}
-          onCancelResearch={() => getVenuesHandler("")}
-        />
-        <div className="restaurants__list">
-          {places?.length > 0 ? (
-            places.map((place, index) => {
-              return <RowCard key={index} data={place} />;
-            })
-          ) : (
-            <div>Loading...</div>
-          )}
-        </div>
-      </div>
-      <MapView data={places} searchHandler={seSearchLocation} />
+      {errorMessage !== null ? (
+        <h1>{errorMessage}</h1>
+      ) : (
+        <>
+          <div>
+            <SearchBar
+              className="restaurants__search"
+              // @ts-expect-error
+              onChange={(value: string): void => {
+                debounceHandler(() => getVenuesHandler(value), 300);
+              }}
+              onSearch={() => {}}
+              onCancelResearch={() => getVenuesHandler("")}
+            />
+            <div className="restaurants__list">
+              {places?.length > 0 ? (
+                places.map((place, index) => {
+                  return <RowCard key={index} data={place} />;
+                })
+              ) : (
+                <div>Loading...</div>
+              )}
+            </div>
+          </div>
+          <MapView data={places} searchHandler={seSearchLocation} />
+        </>
+      )}
     </div>
   );
 };

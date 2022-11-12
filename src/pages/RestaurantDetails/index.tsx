@@ -24,6 +24,8 @@ const RestaurantDetails: React.FC = () => {
     null,
   );
 
+  const [errorMessage, setErrorMessage] = useState<null | string>(null);
+
   const getVenueDeatilsHandler = useCallback(
     (query: string): void => {
       const endPoint: string = `https://api.foursquare.com/v2/venues/${venueId}?`;
@@ -41,7 +43,7 @@ const RestaurantDetails: React.FC = () => {
           console.log(response.data.response.venue);
         })
         .catch(() => {
-          console.log("Error!");
+          setErrorMessage("Oops something went wrong. Please try again.");
         });
     },
     [venueId],
@@ -53,7 +55,9 @@ const RestaurantDetails: React.FC = () => {
 
   return (
     <div className="restaurantDetails">
-      {venueDetails == null ? (
+      {errorMessage !== null ? (
+        <h1>{errorMessage}</h1>
+      ) : venueDetails === null ? (
         <div>Loading...</div>
       ) : (
         <div className="restaurantDetails__content">
