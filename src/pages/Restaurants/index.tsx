@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import RowCard from "../../components/RowCard";
 import { debounceHandler } from "../../utils";
@@ -13,32 +13,35 @@ const RestaurantsList: React.FC = () => {
 
   const [places, setPlace] = useState([]);
 
-  const getVenuesHandler = (query: string): void => {
-    const endPoint: string = "https://api.foursquare.com/v2/venues/search?";
+  const getVenuesHandler = useCallback(
+    (query: string): void => {
+      const endPoint: string = "https://api.foursquare.com/v2/venues/search?";
 
-    const parameters = {
-      client_id: "POKXMHQJY0EHTRGZEPMVWPJDWMUTSVRRINJILUSE5WZTSTUI",
-      client_secret: "N4QKO4TTH4QKBFQ3SBYHUTQ5RUWMGAZ0B5JDYUE0H3V2W151",
-      categoryId: "4d4b7105d754a06374d81259",
-      ll: searchLocation,
-      query,
-      radius: "1000",
-      v: "20180725",
-      limit: "10",
-    };
-    axios
-      .get(`${endPoint}${new URLSearchParams(parameters).toString()}`)
-      .then((response) => {
-        setPlace(response?.data?.response?.venues);
-      })
-      .catch(() => {
-        console.log("Error!");
-      });
-  };
+      const parameters = {
+        client_id: "POKXMHQJY0EHTRGZEPMVWPJDWMUTSVRRINJILUSE5WZTSTUI",
+        client_secret: "N4QKO4TTH4QKBFQ3SBYHUTQ5RUWMGAZ0B5JDYUE0H3V2W151",
+        categoryId: "4d4b7105d754a06374d81259",
+        ll: searchLocation,
+        query,
+        radius: "1000",
+        v: "20180725",
+        limit: "10",
+      };
+      axios
+        .get(`${endPoint}${new URLSearchParams(parameters).toString()}`)
+        .then((response) => {
+          setPlace(response?.data?.response?.venues);
+        })
+        .catch(() => {
+          console.log("Error!");
+        });
+    },
+    [searchLocation],
+  );
 
   useEffect(() => {
     getVenuesHandler("");
-  }, [searchLocation]);
+  }, [searchLocation, getVenuesHandler]);
 
   console.log(places);
   return (

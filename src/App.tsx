@@ -1,11 +1,39 @@
-import React from "react";
-import "./App.css";
-import Restaurants from "./pages/Restaurants";
+import { Suspense, lazy } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+const Restaurants = lazy(async () => await import("./pages/Restaurants"));
+const RestaurantDetails = lazy(
+  async () => await import("./pages/RestaurantDetails"),
+);
+
+const routes = [
+  {
+    path: "/",
+    name: "Restaurants",
+    element: Restaurants,
+  },
+  {
+    path: "/restaurant/:id",
+    name: "Restaurants Details",
+    element: RestaurantDetails,
+  },
+];
 
 const App: React.FC = () => {
   return (
     <div>
-      <Restaurants />
+      <Router>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            {routes.map((route) => (
+              <Route
+                key={`${route.name}`}
+                path={`${route.path}`}
+                element={<route.element />}
+              />
+            ))}
+          </Routes>
+        </Suspense>
+      </Router>
     </div>
   );
 };
