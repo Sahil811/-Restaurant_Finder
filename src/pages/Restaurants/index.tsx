@@ -57,10 +57,13 @@ const RestaurantsList: React.FC = () => {
           onCancelResearch={() => getVenuesHandler("")}
         />
         <div className="restaurants__list">
-          {places?.length > 0 &&
+          {places?.length > 0 ? (
             places.map((place, index) => {
               return <RowCard key={index} data={place} />;
-            })}
+            })
+          ) : (
+            <div>Loading...</div>
+          )}
         </div>
       </div>
       <MapView data={places} searchHandler={seSearchLocation} />

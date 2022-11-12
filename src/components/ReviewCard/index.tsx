@@ -8,7 +8,7 @@ import { reviewCardpropType } from "./type";
 
 const ReviewCard = ({ data }: reviewCardpropType): JSX.Element => {
   return (
-    <Card sx={{ display: "flex" }}>
+    <Card sx={{ display: "flex", justifyContent: "space-between" }}>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h5">

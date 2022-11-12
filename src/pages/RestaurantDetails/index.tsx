@@ -51,78 +51,82 @@ const RestaurantDetails: React.FC = () => {
 
   return (
     <div className="restaurantDetails">
-      <div className="restaurantDetails__content">
-        <div>
-          <ArrowBackOutlinedIcon
-            onClick={() => navigate("/")}
-            style={{ fontSize: "40px", cursor: "pointer" }}
-          />
-        </div>
-        <Card sx={{ maxWidth: 500, margin: "auto" }}>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              height="300"
-              width="300"
-              image={`${String(
-                venueDetails?.bestPhoto?.prefix,
-              )}original${String(venueDetails?.bestPhoto?.suffix)}`}
-              alt="Restaurant Image"
+      {venueDetails == null ? (
+        <div>Loading...</div>
+      ) : (
+        <div className="restaurantDetails__content">
+          <div>
+            <ArrowBackOutlinedIcon
+              onClick={() => navigate("/")}
+              style={{ fontSize: "40px", cursor: "pointer" }}
             />
-            <CardContent>
-              <Typography gutterBottom variant="h4" component="div">
-                {venueDetails?.name}
-              </Typography>
-              <Typography gutterBottom variant="h4" component="div">
-                {venueDetails?.rating !== null &&
-                  venueDetails?.rating !== undefined && (
-                    <TextRating value={venueDetails?.rating} />
-                  )}
-              </Typography>
-              <Typography variant="h5" color="text.secondary">
-                <LocationOnOutlinedIcon fontSize="large" />{" "}
-                {`${
-                  venueDetails?.location?.address !== null &&
-                  venueDetails?.location?.address !== undefined &&
-                  venueDetails?.location?.address !== ""
-                    ? String(venueDetails?.location?.address)
-                    : ""
-                }, ${
-                  venueDetails?.location?.crossStreet !== null &&
-                  venueDetails?.location?.crossStreet !== undefined &&
-                  venueDetails?.location?.crossStreet !== ""
-                    ? String(venueDetails?.location?.crossStreet)
-                    : ""
-                }, ${
-                  venueDetails?.location?.city !== null &&
-                  venueDetails?.location?.city !== undefined &&
-                  venueDetails?.location?.city !== ""
-                    ? String(venueDetails?.location?.city)
-                    : ""
-                }, ${
-                  venueDetails?.location?.country !== null &&
-                  venueDetails?.location?.country !== undefined &&
-                  venueDetails?.location?.country !== ""
-                    ? String(venueDetails?.location?.country)
-                    : ""
-                }`}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+          </div>
+          <Card sx={{ maxWidth: 500, margin: "auto" }}>
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                height="300"
+                width="300"
+                image={`${String(
+                  venueDetails?.bestPhoto?.prefix,
+                )}original${String(venueDetails?.bestPhoto?.suffix)}`}
+                alt="Restaurant Image"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h4" component="div">
+                  {venueDetails?.name}
+                </Typography>
+                <Typography gutterBottom variant="h4" component="div">
+                  {venueDetails?.rating !== null &&
+                    venueDetails?.rating !== undefined && (
+                      <TextRating value={venueDetails?.rating} />
+                    )}
+                </Typography>
+                <Typography variant="h5" color="text.secondary">
+                  <LocationOnOutlinedIcon fontSize="large" />{" "}
+                  {`${
+                    venueDetails?.location?.address !== null &&
+                    venueDetails?.location?.address !== undefined &&
+                    venueDetails?.location?.address !== ""
+                      ? String(venueDetails?.location?.address)
+                      : ""
+                  }, ${
+                    venueDetails?.location?.crossStreet !== null &&
+                    venueDetails?.location?.crossStreet !== undefined &&
+                    venueDetails?.location?.crossStreet !== ""
+                      ? String(venueDetails?.location?.crossStreet)
+                      : ""
+                  }, ${
+                    venueDetails?.location?.city !== null &&
+                    venueDetails?.location?.city !== undefined &&
+                    venueDetails?.location?.city !== ""
+                      ? String(venueDetails?.location?.city)
+                      : ""
+                  }, ${
+                    venueDetails?.location?.country !== null &&
+                    venueDetails?.location?.country !== undefined &&
+                    venueDetails?.location?.country !== ""
+                      ? String(venueDetails?.location?.country)
+                      : ""
+                  }`}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
 
-        <div>
-          <Typography gutterBottom variant="h4" component="div">
-            Reviews
-          </Typography>
-        </div>
+          <div>
+            <Typography gutterBottom variant="h4" component="div">
+              Reviews
+            </Typography>
+          </div>
 
-        <div className="restaurantDetails__menuList">
-          {venueDetails?.tips?.groups?.[0].items?.map((review) => (
-            <ReviewCard key={String(review?.id)} data={review} />
-          ))}
+          <div className="restaurantDetails__menuList">
+            {venueDetails?.tips?.groups?.[0]?.items?.map((review) => (
+              <ReviewCard key={String(review?.id)} data={review} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
