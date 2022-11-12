@@ -40,7 +40,6 @@ const RestaurantDetails: React.FC = () => {
         .get(`${endPoint}${new URLSearchParams(parameters).toString()}`)
         .then((response) => {
           setVenueDetails(response?.data?.response?.venue);
-          console.log(response.data.response.venue);
         })
         .catch(() => {
           setErrorMessage("Oops something went wrong. Please try again.");
