@@ -48,7 +48,7 @@ const RestaurantsList: React.FC = () => {
   }, [searchLocation, getVenuesHandler]);
 
   return (
-    <div className="restaurants">
+    <div className="restaurants" data-testid="restaurantsListContent">
       {errorMessage !== null ? (
         <h1>{errorMessage}</h1>
       ) : (

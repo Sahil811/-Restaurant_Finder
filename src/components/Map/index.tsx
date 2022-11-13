@@ -27,6 +27,7 @@ const SearchField = ({ searchHandler }: { searchHandler: Function }): null => {
     });
     // @ts-expect-error
     return () => map.removeControl(searchControl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;

@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
+import React from "react";
+import { render, screen } from "../../test-utils";
 import RowCard from ".";
 
 describe("MapView", () => {
@@ -12,31 +12,19 @@ describe("MapView", () => {
     },
   };
   test("renders correctly", () => {
-    render(
-      <Router>
-        <RowCard data={data} />
-      </Router>,
-    );
-    const textElement = screen.getByTestId("rowCardContent");
-    expect(textElement).toBeInTheDocument();
+    render(<RowCard data={data} />);
+    const rowCardComponent = screen.getByTestId("rowCardContent");
+    expect(rowCardComponent).toBeInTheDocument();
   });
 
   test("address render", () => {
-    render(
-      <Router>
-        <RowCard data={data} />
-      </Router>,
-    );
+    render(<RowCard data={data} />);
     const addressElement = screen.getByText(/address/i);
     expect(addressElement).toBeInTheDocument();
   });
 
   test("distance render", () => {
-    render(
-      <Router>
-        <RowCard data={data} />
-      </Router>,
-    );
+    render(<RowCard data={data} />);
     const distanceElement = screen.getByText(/distance/i);
     expect(distanceElement).toBeInTheDocument();
   });

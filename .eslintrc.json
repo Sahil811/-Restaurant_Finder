@@ -29,5 +29,7 @@
     "react/jsx-uses-react": ["off"],
     "react/jsx-props-no-spreading": ["warn"],
     "react/no-unescaped-entities": ["off"]
-  }
+  },
+  "ignorePatterns": ["babel.config.js", "jest.config.js"]
+  // "eslintIgnore": ["babel.config.js"]
 }
