@@ -12,6 +12,7 @@ const RowCard = ({ data }: propType): JSX.Element => {
       key={data.id}
       sx={{ maxWidth: 345 }}
       onClick={() => navigate(`/restaurant/${String(data.id)}`)}
+      data-testId="rowCardContent"
     >
       <CardActionArea>
         <CardContent>
