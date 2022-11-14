@@ -1,6 +1,6 @@
 /* eslint-disable testing-library/no-unnecessary-act */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { render, screen } from "../../test-utils";
+import { render, screen, act } from "../../test-utils";
 import RestaurantDetails from ".";
 
 describe("RestaurantDetails", () => {
@@ -10,5 +10,13 @@ describe("RestaurantDetails", () => {
       "restaurantDetailsContent",
     );
     expect(restaurantsListComponent).toBeInTheDocument();
+  });
+
+  test("renders restuarant list correctly", async () => {
+    act(async () => {
+      render(<RestaurantDetails />);
+      const nodeElement = await screen.findByText(/Reviews/i);
+      expect(nodeElement).toBeInTheDocument();
+    });
   });
 });
