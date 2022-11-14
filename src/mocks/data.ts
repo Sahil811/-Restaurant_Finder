@@ -30,3 +30,36 @@ export const mockVenueListData = {
     },
   },
 };
+
+export const mockVenueDetailsData = {
+  name: "Miso",
+  rating: 4,
+  bestPhoto: {
+    prefix: "/",
+    suffix: "/",
+  },
+  location: {
+    address: "Tokyo",
+    crossStreet: "minato street",
+    city: "minato",
+    country: "Japan",
+  },
+  tips: {
+    groups: [
+      {
+        items: [
+          {
+            id: 123,
+            photourl: "/",
+            createdAt: "Nov 01, 2012",
+            text: "Good!.",
+            user: {
+              firstName: "Jhon",
+              lastName: "Snow",
+            },
+          },
+        ],
+      },
+    ],
+  },
+};

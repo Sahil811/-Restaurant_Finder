@@ -53,7 +53,7 @@ const RestaurantDetails: React.FC = () => {
   }, [getVenueDeatilsHandler]);
 
   return (
-    <div className="restaurantDetails">
+    <div className="restaurantDetails" data-testid="restaurantDetailsContent">
       {errorMessage !== null ? (
         <h1>{errorMessage}</h1>
       ) : venueDetails === null ? (
