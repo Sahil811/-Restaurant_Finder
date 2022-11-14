@@ -1,22 +1,40 @@
 import { rest } from "msw";
 
 export const handlers = [
-  rest.post("/login", (req, res, ctx) => {
-    const isAuthenticated = sessionStorage.getItem("username");
-
-    if (!isAuthenticated) {
-      return res(
-        ctx.status(403),
-        ctx.json({
-          errorMessage: "Not authenticated",
-        }),
-      );
-    }
-
+  rest.get("https://api.foursquare.com/v2/venues/search", (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
-        firstName: "John",
+        data: {
+          response: {
+            venues: [
+              {
+                id: "1",
+                name: "Miso",
+                location: {
+                  address: "Tokyo",
+                  distance: 12345,
+                },
+              },
+              {
+                id: "2",
+                name: "Taki",
+                location: {
+                  address: "New York",
+                  distance: 123456,
+                },
+              },
+              {
+                id: "3",
+                name: "Yamil",
+                location: {
+                  address: "Kazikstan",
+                  distance: 1234567,
+                },
+              },
+            ],
+          },
+        },
       }),
     );
   }),
