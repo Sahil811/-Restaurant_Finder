@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useMap, MapContainer, TileLayer, Popup, Marker } from "react-leaflet";
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
+import { useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
@@ -34,6 +35,7 @@ const SearchField = ({ searchHandler }: { searchHandler: Function }): null => {
 };
 
 const MapView = ({ data, searchHandler }: propType): JSX.Element => {
+  const navigate = useNavigate();
   return (
     <div className="mapView">
       <MapContainer
@@ -57,7 +59,16 @@ const MapView = ({ data, searchHandler }: propType): JSX.Element => {
                   restaurant?.location?.lng,
                 ]}
               >
-                <Popup>{restaurant?.name}</Popup>
+                <Popup>
+                  <button
+                    className="mapView__popUpButton"
+                    onClick={() => {
+                      navigate(`/restaurant/${String(restaurant.id)}`);
+                    }}
+                  >
+                    {restaurant?.name}
+                  </button>
+                </Popup>
               </Marker>
             );
           })}
