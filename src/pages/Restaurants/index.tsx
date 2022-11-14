@@ -66,7 +66,9 @@ const RestaurantsList: React.FC = () => {
             <div data-testid="restaurants__list" className="restaurants__list">
               {places?.length > 0 ? (
                 places.map((place, index) => {
-                  return <RowCard key={index} data={place} />;
+                  return (
+                    <RowCard data-testid="rowCard" key={index} data={place} />
+                  );
                 })
               ) : (
                 <div>Loading...</div>

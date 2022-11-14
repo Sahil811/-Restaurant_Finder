@@ -1,4 +1,6 @@
-import { render, screen } from "../../test-utils";
+/* eslint-disable testing-library/no-unnecessary-act */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import { render, screen, act } from "../../test-utils";
 import RestaurantsList from ".";
 
 describe("RestaurantsList", () => {
@@ -8,5 +10,13 @@ describe("RestaurantsList", () => {
       "restaurantsListContent",
     );
     expect(restaurantsListComponent).toBeInTheDocument();
+  });
+
+  test("renders restuarant list correctly", async () => {
+    act(async () => {
+      render(<RestaurantsList />);
+      const listNode = await screen.findByTestId("restaurants__list");
+      expect(listNode.children).toHaveLength(3);
+    });
   });
 });
