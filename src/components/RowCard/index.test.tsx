@@ -1,5 +1,6 @@
 import React from "react";
 import { render, screen } from "../../test-utils";
+import user from "@testing-library/user-event";
 import RowCard from ".";
 
 describe("MapView", () => {
@@ -15,6 +16,14 @@ describe("MapView", () => {
     render(<RowCard data={data} />);
     const rowCardComponent = screen.getByTestId("rowCardContent");
     expect(rowCardComponent).toBeInTheDocument();
+  });
+
+  test("Element Click", async () => {
+    user.setup();
+    render(<RowCard data={data} />);
+    const rowCardComponent = screen.getByTestId("rowCardContent");
+    await user.click(rowCardComponent);
+    expect(window.location.pathname).not.toBe("/");
   });
 
   test("address render", () => {
