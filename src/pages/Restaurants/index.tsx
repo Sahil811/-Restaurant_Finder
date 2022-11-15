@@ -55,7 +55,7 @@ const RestaurantsList: React.FC = () => {
               {loading === true ? (
                 <div>Loading...</div>
               ) : (
-                places.map(
+                places?.map(
                   (
                     place: {
                       id: string;

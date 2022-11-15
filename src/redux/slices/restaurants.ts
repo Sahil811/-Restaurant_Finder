@@ -31,7 +31,27 @@ export const restaurantsListActionCreator = createAsyncThunk(
   },
 );
 
-const isPendingAction = isPending(restaurantsListActionCreator);
+export const restaurantDetailsActionCreator = createAsyncThunk(
+  "restaurantDetails/import",
+  async (payload: { venueId: string }) => {
+    const endPoint: string = `${SERVER_URL.RESTAURANT_DETAILS}/${payload.venueId}?`;
+    const listParameters: searchParamsType = {
+      ...parameters,
+    };
+    const { data } = await fetchUtility({
+      method: "get",
+      // @ts-expect-error
+      url: `${endPoint}${new URLSearchParams(listParameters).toString()}`,
+      data: payload,
+    });
+    return data;
+  },
+);
+
+const isPendingAction = isPending(
+  restaurantsListActionCreator,
+  restaurantDetailsActionCreator,
+);
 
 const initialState: initialStateType = {
   list: [],
@@ -55,6 +75,21 @@ export const restaurantsSlice = createSlice({
       state.loading = false;
       state.message = action?.payload;
     });
+    builder.addCase(
+      restaurantDetailsActionCreator.fulfilled,
+      (state, action) => {
+        state.loading = false;
+        // @ts-expect-error
+        state.details = action?.payload?.response?.venue;
+      },
+    );
+    builder.addCase(
+      restaurantDetailsActionCreator.rejected,
+      (state, action) => {
+        state.loading = false;
+        state.message = action?.payload;
+      },
+    );
     builder.addMatcher(isPendingAction, (state) => {
       state.loading = true;
     });
