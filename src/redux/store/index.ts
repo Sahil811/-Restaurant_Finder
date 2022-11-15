@@ -3,7 +3,7 @@ import { createLogger } from "redux-logger";
 import restaurantsReducer from "../slices/restaurants";
 
 let middlewares: any = [];
-if (process.env.NODE_ENV !== "production") {
+if (process.env.REACT_APP_NODE_ENV === "development") {
   middlewares = createLogger();
 }
 
@@ -11,7 +11,7 @@ export default configureStore({
   reducer: {
     restaurantsData: restaurantsReducer,
   },
-  devTools: process.env.NODE_ENV !== "production",
+  devTools: process.env.REACT_APP_NODE_ENV === "development",
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(middlewares),
 });
