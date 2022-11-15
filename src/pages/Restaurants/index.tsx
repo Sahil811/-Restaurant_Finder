@@ -1,46 +1,34 @@
 import { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 import RowCard from "../../components/RowCard";
 import { debounceHandler } from "../../utils";
 import SearchBar from "@mkyy/mui-search-bar";
 import MapView from "../../components/Map";
-import { searchParamsType } from "../types";
+import { restaurantsListActionCreator } from "../../redux/slices/restaurants";
 import "./index.scss";
 
 const RestaurantsList: React.FC = () => {
+  const dispatch = useDispatch();
+  const {
+    list: places,
+    loading,
+    error,
+    // @ts-expect-error
+  } = useSelector((state) => state.restaurantsData);
   const [searchLocation, seSearchLocation] = useState<string>(
     "35.66470143744811,139.73781436564153", // Cogent Labes
   );
 
-  const [errorMessage, setErrorMessage] = useState<null | string>(null);
-
-  const [places, setPlace] = useState([]);
-
   const getVenuesHandler = useCallback(
-    (query: string): void => {
-      const endPoint: string = "https://api.foursquare.com/v2/venues/search?";
-
-      const parameters: searchParamsType = {
-        client_id: process.env.REACT_APP_CLIENT_ID,
-        client_secret: process.env.REACT_APP_CLIENT_SECREATE,
-        categoryId: "4d4b7105d754a06374d81259",
-        ll: searchLocation,
-        query,
-        radius: "1000",
-        v: "20180725",
-        limit: "10",
-      };
-      axios
+    (query: string) =>
+      dispatch(
         // @ts-expect-error
-        .get(`${endPoint}${new URLSearchParams(parameters).toString()}`)
-        .then((response) => {
-          setPlace(response?.data?.response?.venues);
-        })
-        .catch(() => {
-          setErrorMessage("Oops something went wrong. Please try again.");
-        });
-    },
-    [searchLocation],
+        restaurantsListActionCreator({
+          searchLocation,
+          query,
+        }),
+      ),
+    [searchLocation, dispatch],
   );
 
   useEffect(() => {
@@ -49,8 +37,8 @@ const RestaurantsList: React.FC = () => {
 
   return (
     <div className="restaurants" data-testid="restaurantsListContent">
-      {errorMessage !== null ? (
-        <h1>{errorMessage}</h1>
+      {error !== null ? (
+        <h1>Oops something went wrong. Please try again.</h1>
       ) : (
         <>
           <div>
@@ -64,14 +52,23 @@ const RestaurantsList: React.FC = () => {
               onCancelResearch={() => getVenuesHandler("")}
             />
             <div data-testid="restaurants__list" className="restaurants__list">
-              {places?.length > 0 ? (
-                places.map((place, index) => {
-                  return (
-                    <RowCard data-testid="rowCard" key={index} data={place} />
-                  );
-                })
-              ) : (
+              {loading === true ? (
                 <div>Loading...</div>
+              ) : (
+                places?.map(
+                  (
+                    place: {
+                      id: string;
+                      name: string;
+                      location: { address: string; distance: number };
+                    },
+                    index: any,
+                  ) => {
+                    return (
+                      <RowCard data-testid="rowCard" key={index} data={place} />
+                    );
+                  },
+                )
               )}
             </div>
           </div>

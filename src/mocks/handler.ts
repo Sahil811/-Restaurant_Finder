@@ -1,12 +1,13 @@
 import { rest } from "msw";
+import { SERVER_URL } from "../constant";
 import { mockVenueListData, mockVenueDetailsData } from "./data";
 
 export const handlers = [
-  rest.get("https://api.foursquare.com/v2/venues/search", (req, res, ctx) => {
+  rest.get(`${SERVER_URL.RESTAURANTS_LIST}`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockVenueListData));
   }),
 
-  rest.get("https://api.foursquare.com/v2/venues/", (req, res, ctx) => {
+  rest.get(`${SERVER_URL.RESTAURANT_DETAILS}/`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockVenueDetailsData));
   }),
 ];

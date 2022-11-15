@@ -1,5 +1,4 @@
-import { useEffect, useCallback, useState } from "react";
-import axios from "axios";
+import { useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import Card from "@mui/material/Card";
@@ -8,55 +7,45 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
-import { venueDetailspropType } from "./types";
+import { useSelector, useDispatch } from "react-redux";
 import TextRating from "../../components/Rating";
 import ReviewCard from "../../components/ReviewCard";
-import { searchParamsType } from "../types";
+import { restaurantDetailsActionCreator } from "../../redux/slices/restaurants";
 import "./index.scss";
 
 const RestaurantDetails: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const {
+    details: venueDetails,
+    loading,
+    error,
+    // @ts-expect-error
+  } = useSelector((state) => state.restaurantsData);
   const pathnameArray = location.pathname.split("/");
   const venueId = pathnameArray[pathnameArray.length - 1];
 
-  const [venueDetails, setVenueDetails] = useState<venueDetailspropType | null>(
-    null,
-  );
-
-  const [errorMessage, setErrorMessage] = useState<null | string>(null);
-
   const getVenueDeatilsHandler = useCallback(
-    (query: string): void => {
-      const endPoint: string = `https://api.foursquare.com/v2/venues/${venueId}?`;
-
-      const parameters: searchParamsType = {
-        client_id: process.env.REACT_APP_CLIENT_ID,
-        client_secret: process.env.REACT_APP_CLIENT_SECREATE,
-        v: "20180725",
-      };
-      axios
+    () =>
+      dispatch(
         // @ts-expect-error
-        .get(`${endPoint}${new URLSearchParams(parameters).toString()}`)
-        .then((response) => {
-          setVenueDetails(response?.data?.response?.venue);
-        })
-        .catch(() => {
-          setErrorMessage("Oops something went wrong. Please try again.");
-        });
-    },
-    [venueId],
+        restaurantDetailsActionCreator({
+          venueId,
+        }),
+      ),
+    [venueId, dispatch],
   );
 
   useEffect(() => {
-    getVenueDeatilsHandler("");
+    getVenueDeatilsHandler();
   }, [getVenueDeatilsHandler]);
 
   return (
     <div className="restaurantDetails" data-testid="restaurantDetailsContent">
-      {errorMessage !== null ? (
-        <h1>{errorMessage}</h1>
-      ) : venueDetails === null ? (
+      {error !== null ? (
+        <h1>Oops something went wrong. Please try again.</h1>
+      ) : loading === true ? (
         <div>Loading...</div>
       ) : (
         <div className="restaurantDetails__content">
@@ -126,9 +115,19 @@ const RestaurantDetails: React.FC = () => {
           </div>
 
           <div className="restaurantDetails__menuList">
-            {venueDetails?.tips?.groups?.[0]?.items?.map((review) => (
-              <ReviewCard key={String(review?.id)} data={review} />
-            ))}
+            {venueDetails?.tips?.groups?.[0]?.items?.map(
+              (review: {
+                id: any;
+                photourl: string;
+                createdAt: number | Date;
+                map: Function;
+                length: number;
+                text: string;
+                user: { firstName: string; lastName: string };
+              }): JSX.Element => (
+                <ReviewCard key={String(review?.id)} data={review} />
+              ),
+            )}
           </div>
         </div>
       )}
