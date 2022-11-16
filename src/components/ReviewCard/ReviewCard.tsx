@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import moment from "moment";
-import { reviewCardpropType } from "./types";
+import { reviewCardpropType } from "./ReviewCardTypes";
 
 const ReviewCard = ({ data }: reviewCardpropType): JSX.Element => {
   return (

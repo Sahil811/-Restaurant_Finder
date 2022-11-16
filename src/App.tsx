@@ -2,11 +2,13 @@ import { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "../src/redux/store";
-import ErrorBoundary from "./components/Hoc/ErrorBoundry";
-import ErrorPage from "./components/ErrorPage";
-const Restaurants = lazy(async () => await import("./pages/Restaurants"));
+import ErrorBoundary from "./components/Hoc/ErrorBoundry/ErrorBoundry";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
+const Restaurants = lazy(
+  async () => await import("./pages/Restaurants/Restaurants"),
+);
 const RestaurantDetails = lazy(
-  async () => await import("./pages/RestaurantDetails"),
+  async () => await import("./pages/RestaurantDetails/RestaurantDetails"),
 );
 
 const routes = [

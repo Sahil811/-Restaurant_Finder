@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "../../test-utils";
 import user from "@testing-library/user-event";
-import RowCard from ".";
+import RowCard from "./RowCard";
 
 describe("MapView", () => {
   const data = {

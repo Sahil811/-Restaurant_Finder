@@ -1,4 +1,4 @@
-export const mockVenueListData = {
+const mockVenueListData = {
   data: {
     response: {
       venues: [
@@ -31,7 +31,7 @@ export const mockVenueListData = {
   },
 };
 
-export const mockVenueDetailsData = {
+const mockVenueDetailsData = {
   name: "Miso",
   rating: 4,
   bestPhoto: {
@@ -63,3 +63,5 @@ export const mockVenueDetailsData = {
     ],
   },
 };
+
+export { mockVenueListData, mockVenueDetailsData };

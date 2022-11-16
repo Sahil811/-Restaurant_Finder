@@ -8,10 +8,10 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { useSelector, useDispatch } from "react-redux";
-import TextRating from "../../components/Rating";
-import ReviewCard from "../../components/ReviewCard";
+import TextRating from "../../components/Rating/Rating";
+import ReviewCard from "../../components/ReviewCard/ReviewCard";
 import { restaurantDetailsActionCreator } from "../../redux/slices/restaurants";
-import "./index.scss";
+import "./RestaurantDetails.scss";
 
 const RestaurantDetails: React.FC = () => {
   const navigate = useNavigate();
