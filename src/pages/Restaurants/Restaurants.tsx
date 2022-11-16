@@ -1,11 +1,11 @@
 import { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import RowCard from "../../components/RowCard";
+import RowCard from "../../components/RowCard/RowCard";
 import { debounceHandler } from "../../utils";
 import SearchBar from "@mkyy/mui-search-bar";
-import MapView from "../../components/Map";
+import MapView from "../../components/MapView/MapView";
 import { restaurantsListActionCreator } from "../../redux/slices/restaurants";
-import "./index.scss";
+import "./Restaurants.scss";
 
 const RestaurantsList: React.FC = () => {
   const dispatch = useDispatch();

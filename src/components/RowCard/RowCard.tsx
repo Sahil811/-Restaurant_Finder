@@ -3,7 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { propType } from "./types";
+import { propType } from "./RowCardTypes";
 
 const RowCard = ({ data }: propType): JSX.Element => {
   const navigate = useNavigate();

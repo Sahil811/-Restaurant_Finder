@@ -1,22 +1,22 @@
 /* eslint-disable testing-library/no-unnecessary-act */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { render, screen, act } from "../../test-utils";
-import RestaurantDetails from ".";
+import RestaurantsList from "./Restaurants";
 
-describe("RestaurantDetails", () => {
+describe("RestaurantsList", () => {
   test("renders correctly", () => {
-    render(<RestaurantDetails />);
+    render(<RestaurantsList />);
     const restaurantsListComponent = screen.getByTestId(
-      "restaurantDetailsContent",
+      "restaurantsListContent",
     );
     expect(restaurantsListComponent).toBeInTheDocument();
   });
 
   test("renders restuarant list correctly", async () => {
     act(async () => {
-      render(<RestaurantDetails />);
-      const nodeElement = await screen.findByText(/Reviews/i);
-      expect(nodeElement).toBeInTheDocument();
+      render(<RestaurantsList />);
+      const listNode = await screen.findByTestId("restaurants__list");
+      expect(listNode.children).toHaveLength(3);
     });
   });
 });

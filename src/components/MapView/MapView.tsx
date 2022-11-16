@@ -6,8 +6,8 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-geosearch/dist/geosearch.css";
-import { propType } from "./types";
-import "./index.scss";
+import { propType } from "./MapViewTypes";
+import "./MapView.scss";
 
 const SearchField = ({ searchHandler }: { searchHandler: Function }): null => {
   const provider = new OpenStreetMapProvider();
