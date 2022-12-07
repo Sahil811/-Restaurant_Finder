@@ -133,6 +133,7 @@ WRITE SMALL, REUSABLE AND COMPOSABLE FUNCTIONS
 5. Proper UI for Response and Error handling this includes: Loader, PopUps etc.
 6. More consideration TypeScript and Eslint outputs.
 7. Sonar Lint can be setup for even more better linting.
+8. Mobile responsivness and UI design imporvement.
 
 ### Recently done project:
    [ShopUp](https://github.com/Sahil811/Shopup)
